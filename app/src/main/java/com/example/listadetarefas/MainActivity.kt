@@ -20,6 +20,8 @@ class MainActivity : AppCompatActivity() {
     private var coordinatorLayout: CoordinatorLayout? = null
     private var recyclerView: RecyclerView? = null
 
+    private var db: DBHelper? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -34,6 +36,9 @@ class MainActivity : AppCompatActivity() {
     private fun controle() {
         coordinatorLayout = findViewById(R.id.layout_main)
         recyclerView =findViewById(R.id.rv_main)
+
+        db = DBHelper(this)
+
         val fab = findViewById<View>(R.id.fab) as FloatingActionButton
 
         fab.setOnClickListener{ showDialog(false, null, -1)}
@@ -65,6 +70,12 @@ class MainActivity : AppCompatActivity() {
             }else{
                 alertDialog.dismiss()
             }
+
+            createListaItem(input.text.toString())
         } }
+    }
+
+    private  fun createListaItem(listaText: String) {
+        db!!.insertListaItem(listaText)
     }
 }
