@@ -5,6 +5,8 @@ class ListaItemModel {
     var listaTexto: String? = null
     var listaData: String? = null
 
+    constructor()
+
     //contruindo e ligando objetos a tabela
     constructor(lista_id: Int, lista_texto: String, lista_data: String){
         this. listaId = lista_id
@@ -22,9 +24,9 @@ class ListaItemModel {
         val CREATE_TABLE = (
                 "CREATE TABLE"
                 + LISTA_TABLE_NAME +"("
-                + LISTA_ID_COLUMN + "INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + LISTA_TEXT_COLUMN + "TEXT,"
-                + LISTA_DATA_COLUMN + "DATETIME DEFAULT CURRENT_TIMESTAMP"
+                + LISTA_ID_COLUMN + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + LISTA_TEXT_COLUMN + " TEXT, "
+                + LISTA_DATA_COLUMN + " DATETIME DEFAULT CURRENT_TIMESTAMP"
                 + ")"
                 )
     }

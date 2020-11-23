@@ -6,12 +6,11 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
-import android.widget.Toolbar
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.text.FieldPosition
@@ -19,6 +18,8 @@ import java.text.FieldPosition
 class MainActivity : AppCompatActivity() {
     private var coordinatorLayout: CoordinatorLayout? = null
     private var recyclerView: RecyclerView? = null
+    private var ItemsList = ArrayList<ListaItemModel>()
+    private var mAdapter : ListaItemAdapter? = null
 
     private var db: DBHelper? = null
 
@@ -36,12 +37,19 @@ class MainActivity : AppCompatActivity() {
     private fun controle() {
         coordinatorLayout = findViewById(R.id.layout_main)
         recyclerView =findViewById(R.id.rv_main)
-
         db = DBHelper(this)
 
         val fab = findViewById<View>(R.id.fab) as FloatingActionButton
 
         fab.setOnClickListener{ showDialog(false, null, -1)}
+
+        // Exibe os Resultados
+        ItemsList.addAll(db!!.ItensList)
+        mAdapter = ListaItemAdapter(this, ItemsList)
+        val mLayoutManager = LinearLayoutManager(applicationContext)
+        recyclerView!!.layoutManager = mLayoutManager
+        recyclerView!!.itemAnimator = DefaultItemAnimator()
+        recyclerView!!.adapter = mAdapter
     }
 
     private fun showDialog(isUpdate: Boolean, nothing: Nothing?, position: Int) {
