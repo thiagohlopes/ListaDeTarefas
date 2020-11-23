@@ -18,7 +18,7 @@ import java.text.FieldPosition
 class MainActivity : AppCompatActivity() {
     private var coordinatorLayout: CoordinatorLayout? = null
     private var recyclerView: RecyclerView? = null
-    private var ItemsList = ArrayList<ListaItemModel>()
+    private var itemsList = ArrayList<ListaItemModel>()
     private var mAdapter : ListaItemAdapter? = null
 
     private var db: DBHelper? = null
@@ -44,8 +44,8 @@ class MainActivity : AppCompatActivity() {
         fab.setOnClickListener{ showDialog(false, null, -1)}
 
         // Exibe os Resultados
-        ItemsList.addAll(db!!.ItensList)
-        mAdapter = ListaItemAdapter(this, ItemsList)
+        itemsList.addAll(db!!.ItensList)
+        mAdapter = ListaItemAdapter(this, itemsList)
         val mLayoutManager = LinearLayoutManager(applicationContext)
         recyclerView!!.layoutManager = mLayoutManager
         recyclerView!!.itemAnimator = DefaultItemAnimator()
@@ -84,6 +84,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private  fun createListaItem(listaText: String) {
-        db!!.insertListaItem(listaText)
+        val item = db!!.insertListaItem(listaText)
+        val novoItem = db!!.getListaItem(item)
+
+        if(novoItem != null){
+            itemsList.add(0, novoItem)
+            mAdapter!!.notifyDataSetChanged()
+        }
+
     }
 }
